@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist UX/UI Digi Imago</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .carousel-container {
+            width: 1080px; /* Ancho base del formato de Instagram */
+            height: 1350px; /* Altura base del formato de Instagram */
+            max-width: 95vw;
+            max-height: calc(95vw * 1.25); /* Mantiene la proporción */
+            overflow: hidden;
+            position: relative;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .carousel-page {
+            flex: 0 0 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5%;
+            box-sizing: border-box;
+        }
+        .page-content {
+            width: 100%;
+            max-width: 800px;
+        }
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            color: #337dbcff;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10;
+            padding: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        #prevBtn {
+            left: 20px;
+        }
+        #nextBtn {
+            right: 20px;
+        }
+        .icon {
+            font-size: 3rem;
+            color: #3ebde4ff;
+            margin-bottom: 1rem;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .checkbox-label input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #337dbcff;
+            border-radius: 6px;
+            margin-right: 12px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+        }
+        .checkbox-label input[type="checkbox"]:checked {
+            background-color: #337dbcff;
+            border-color: #337dbcff;
+        }
+        .checkbox-label input[type="checkbox"]:checked::after {
+            content: '✓';
+            color: #ffffff;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .progress-bar-container {
+            width: 80%;
+            height: 15px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #3ebde4ff;
+            transition: width 0.5s ease-in-out;
+            border-radius: 10px;
+        }
+        .result-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .summary-message {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .summary-message p {
+            margin-bottom: 1rem;
+        }
+        .summary-message strong {
+            color: #337dbcff;
+        }
+        .btn-contact {
+            background-color: #337dbcff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 2rem;
+        }
+        .btn-contact:hover {
+            background-color: #2b6a9e;
+        }
+    </style>
+    <!-- Incluir Phosphor Icons para los íconos -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/dist/phosphor.js"></script>
+</head>
+<body class="bg-[#f0f2f5] p-5">
+
+    <div class="carousel-container">
+        <div class="carousel-inner" id="carouselInner">
+
+            <!-- Página 1: Título y objetivo -->
+            <div class="carousel-page bg-white text-center">
+                <div class="flex-grow flex items-center justify-center">
+                    <div class="page-content">
+                        <img src="/img/digiImago.png" alt="Digi Imago Logo" class="w-1/4 mx-auto mb-6">
+                        <h1 class="text-4xl font-bold text-[#337dbcff] mb-4">Checklist UX/UI para tu Sitio Web</h1>
+                        <p class="text-xl text-gray-700">En solo 5 minutos descubre si tu p&aacute;gina est&aacute; ayudando a tu negocio… ¡o sabote&aacute;ndolo!</p>
+                        <button id="startBtn" class="mt-8 bg-[#337dbcff] text-white py-3 px-8 rounded-full font-semibold text-lg transition-transform transform hover:scale-105">
+                            Comenzar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 2: Apariencia y Navegación -->
+            <div class="carousel-page bg-white text-left">
+                <div class="page-content">
+                    <h2 class="text-3xl font-bold text-[#3ebde4ff] mb-6">✅ Apariencia y Navegación</h2>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-palette-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="apariencia-navegacion">
+                            Diseño Profesional: ¿Tu sitio transmite confianza y modernidad?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-drop-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="apariencia-navegacion">
+                            Identidad de Marca: ¿Los colores y tipografías reflejan quién eres?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-compass-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="apariencia-navegacion">
+                            Fácil de Navegar: ¿Un visitante nuevo encuentra rápido lo que busca?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-binoculars-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="apariencia-navegacion">
+                            Datos Clave a la Vista: Marca, servicios, dirección y teléfono visibles al instante.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 3: Contenido y Confianza -->
+            <div class="carousel-page bg-white text-left">
+                <div class="page-content">
+                    <h2 class="text-3xl font-bold text-[#3ebde4ff] mb-6">✅ Contenido y Confianza</h2>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-pencil-line-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="contenido-confianza">
+                            Mensajes Claros: ¿Tus servicios se entienden sin tecnicismos?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-star-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="contenido-confianza">
+                            Testimonios y Credenciales: ¿Tienes reseñas o certificaciones visibles?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-book-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="contenido-confianza">
+                            Blog / Artículos: ¿Respondes dudas comunes y mejoras tu SEO?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-camera-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="contenido-confianza">
+                            Fotos de Calidad: ¿Tu equipo e instalaciones se muestran de forma profesional?
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 4: Conversión y Contacto -->
+            <div class="carousel-page bg-white text-left">
+                <div class="page-content">
+                    <h2 class="text-3xl font-bold text-[#3ebde4ff] mb-6">✅ Conversión y Contacto</h2>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-arrow-fat-line-right-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="conversion-contacto">
+                            CTA Directo: ¿Tus botones dicen cosas claras como “Agenda tu cita” o “Contáctanos”?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-receipt-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="conversion-contacto">
+                            Formulario Sencillo: Solo lo básico: nombre, correo, teléfono, mensaje.
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-device-mobile-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="conversion-contacto">
+                            Contacto al Instante: ¿Teléfono y correo funcionan con un clic desde celular?
+                        </label>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="ph-calendar-plus-light text-5xl text-[#3ebde4ff] mr-4"></i>
+                        <label class="checkbox-label text-lg font-medium text-gray-800">
+                            <input type="checkbox" data-category="conversion-contacto">
+                            Citas Online: ¿Tus clientes pueden reservar directamente desde la web?
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página 5: Resumen y resultado -->
+            <div class="carousel-page bg-white text-center">
+                <div class="page-content">
+                    <h2 class="text-3xl font-bold text-[#3ebde4ff] mb-6">🔎 Resumen</h2>
+                    <p class="text-xl text-gray-700 font-medium">Respuestas correctas: <span id="correctCount" class="text-[#3ebde4ff] font-bold">0</span></p>
+                    <p class="text-xl text-gray-700 font-medium">Respuestas incorrectas: <span id="incorrectCount" class="text-red-500 font-bold">0</span></p>
+
+                    <div class="progress-bar-container">
+                        <div id="progressBar" class="progress-bar"></div>
+                    </div>
+
+                    <div id="resultText" class="result-text"></div>
+                    
+                    <div class="summary-message">
+                        <p class="text-xl">Si contestaste “No” a varias preguntas… <strong class="text-red-500">🚨 tu web podría estar alejando clientes en lugar de atraerlos.</strong></p>
+                        <p class="text-xl font-medium mt-4">💡 ¡La buena noticia! Detectar las fallas es el primer paso.</p>
+                        <p class="text-xl font-medium mt-4">En <strong class="text-[#3ebde4ff]">Digi Imago</strong> sabemos cómo convertir tu página en una herramienta que trabaja a tu favor 💻✨.</p>
+                    </div>
+
+                    <a href="https://www.instagram.com/digiimagomx/" target="_blank" class="btn-contact inline-block">
+                        ¡Contáctanos!
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botones de navegación -->
+        <button id="prevBtn" class="nav-button opacity-50 pointer-events-none">&#10094;</button>
+        <button id="nextBtn" class="nav-button">&#10095;</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carouselInner = document.getElementById('carouselInner');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const startBtn = document.getElementById('startBtn');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const correctCountSpan = document.getElementById('correctCount');
+            const incorrectCountSpan = document.getElementById('incorrectCount');
+            const progressBar = document.getElementById('progressBar');
+            const resultText = document.getElementById('resultText');
+
+            const totalQuestions = checkboxes.length;
+            let currentIndex = 0;
+            const totalPages = document.querySelectorAll('.carousel-page').length;
+
+            // Función para actualizar la vista del carrusel
+            const updateCarousel = () => {
+                const offset = -currentIndex * 100;
+                carouselInner.style.transform = `translateX(${offset}%)`;
+                
+                prevBtn.classList.toggle('pointer-events-none', currentIndex === 0);
+                prevBtn.classList.toggle('opacity-50', currentIndex === 0);
+                nextBtn.classList.toggle('pointer-events-none', currentIndex === totalPages - 1);
+                nextBtn.classList.toggle('opacity-50', currentIndex === totalPages - 1);
+
+                if (currentIndex === 0) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                }
+                
+                if (currentIndex === totalPages - 1) {
+                    calculateResult();
+                }
+            };
+
+            // Navegación con botones
+            startBtn.addEventListener('click', () => {
+                currentIndex = 1;
+                updateCarousel();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < totalPages - 1) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+
+            // Función para calcular y mostrar el resultado
+            const calculateResult = () => {
+                const correctCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+                const incorrectCount = totalQuestions - correctCount;
+                const percentage = (correctCount / totalQuestions) * 100;
+
+                correctCountSpan.textContent = correctCount;
+                incorrectCountSpan.textContent = incorrectCount;
+                progressBar.style.width = `${percentage}%`;
+
+                if (percentage >= 80) {
+                    resultText.textContent = "¡Excelente! Tu sitio tiene una gran base UX/UI.";
+                    progressBar.style.backgroundColor = '#3ebde4ff';
+                } else if (percentage >= 50) {
+                    resultText.textContent = "Bien, pero hay oportunidades de mejora.";
+                    progressBar.style.backgroundColor = '#f7d34d';
+                } else {
+                    resultText.textContent = "¡Atención! Tu sitio necesita mejoras urgentes.";
+                    progressBar.style.backgroundColor = '#ef4444';
+                }
+            };
+        });
+    </script>
+</body>
+</html>
